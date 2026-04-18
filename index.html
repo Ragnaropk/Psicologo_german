@@ -20,13 +20,14 @@
   <div class="page-shell">
     <header class="site-header">
       <a class="brand" href="#inicio" aria-label="Ir al inicio">
-        <img src="LOGO%204.1.png" alt="Logo de Germán Serés, psicólogo">
+        <img src="assets/logo.png" alt="Logo de Germán Serés, psicólogo">
       </a>
       <nav class="site-nav" aria-label="Principal">
         <a href="#enfoque">Enfoque</a>
         <a href="#para-ti">Para ti</a>
         <a href="#trabajo">Mi forma de trabajar</a>
         <a href="#modalidad">Modalidad</a>
+        <a href="#constancias">Constancias</a>
       </nav>
     </header>
 
@@ -58,7 +59,7 @@
 
         <aside class="hero-panel">
           <div class="hero-badge">Terapia basada en evidencia</div>
-          <img class="hero-illustration" src="cerebro.png" alt="Ilustración de cerebro">
+          <img class="hero-illustration" src="assets/cerebro.png" alt="Ilustración de cerebro">
           <div class="hero-card">
             <h2>Trabajo desde dos enfoques profundamente efectivos</h2>
             <ul>
@@ -147,7 +148,7 @@
             <figure class="about-photo-wrap">
               <img
                 class="about-photo"
-                src="German_foto.jpeg"
+                src="assets/German_foto.jpeg"
                 alt="Retrato de Germán Serés"
               >
             </figure>
@@ -183,6 +184,19 @@
           <span>Sesiones individuales</span>
         </div>
       </section>
+
+      <section class="section-card reveal" id="constancias">
+        <div class="section-heading">
+          <span class="section-kicker">Formación continua</span>
+          <h2>Constancias que respaldan su preparación profesional</h2>
+          <p>
+            Esta sección muestra parte de la formación complementaria de Germán en temas clínicos
+            relevantes. Puedes tocar cualquier constancia para verla más grande sin salir de la página.
+          </p>
+        </div>
+
+        <div class="certificate-gallery" id="certificate-gallery" aria-label="Galería de constancias"></div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -201,6 +215,15 @@
   >
     Agendar por WhatsApp
   </a>
+
+  <div class="image-modal" id="image-modal" aria-hidden="true" role="dialog" aria-label="Vista ampliada de constancia">
+    <button class="image-modal-close" id="image-modal-close" type="button" aria-label="Cerrar imagen ampliada">Cerrar</button>
+    <div class="image-modal-backdrop" id="image-modal-backdrop"></div>
+    <figure class="image-modal-figure">
+      <img id="image-modal-img" alt="">
+      <figcaption id="image-modal-caption"></figcaption>
+    </figure>
+  </div>
 
   <script src="script.js" defer></script>
 </body>

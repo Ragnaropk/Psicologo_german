@@ -52,8 +52,61 @@ const fitPoints = [
   }
 ];
 
+const certificates = [
+  {
+    title: "Herramientas para el control de la ansiedad",
+    image: "Constancias German/Constancia-Curso-Virtual-de-Herramientas-para-el-Control-de-la-Ansiedad_Curso-Virtual-de-Her-page-00001.jpg"
+  },
+  {
+    title: "Primeros auxilios psicológicos",
+    image: "Constancias German/Constancia-Curso-Virtual-de-Primeros-Auxilios-Psicologicos_Curso-Virtual-de-Primeros-Auxilio-page-00001.jpg"
+  },
+  {
+    title: "Terapia cognitivo conductual",
+    image: "Constancias German/Constancia-Curso-Virtual-de-Terapia-Cognitivo-Conductual_Curso-Virtual-de-Terapia-Cognitivo--page-00001.jpg"
+  },
+  {
+    title: "Posvención del suicidio",
+    image: "Constancias German/Constancia-Curso-Virtual-Posvencion-del-Suicidio_Curso-Virtual-Posvencion-del-Suicidio_Germa-page-00001.jpg"
+  },
+  {
+    title: "Prevención de autolesiones",
+    image: "Constancias German/Constancia-Curso-Virtual-Prevencion-de-Autolesiones_Curso-Virtual-Prevencion-de-Autolesiones-page-00001.jpg"
+  },
+  {
+    title: "Prevención del suicidio",
+    image: "Constancias German/Constancia-Curso-Virtual-Prevencion-del-Suicidio_Curso-Virtual-Prevencion-del-Suicidio_Germa-page-00001.jpg"
+  },
+  {
+    title: "Psicología de las adicciones",
+    image: "Constancias German/Constancia-Curso-Virtual-Psicologia-de-las-Adicciones_Curso-Virtual-Psicologia-de-las-Adicci-page-00001.jpg"
+  },
+  {
+    title: "Trastornos de la conducta alimentaria",
+    image: "Constancias German/Constancia-Curso-Virtual-Trastornos-de-la-Conducta-Alimentaria_Curso-Virtual-Trastornos-de-l-page-00001.jpg"
+  },
+  {
+    title: "Violencia de género",
+    image: "Constancias German/Constancia-Curso-Virtual-Violencia-de-Genero-Que-Es-y-Como-Prevenirla_Curso-Virtual-Violenci-page-00001.jpg"
+  },
+  {
+    title: "Autocuidado para profesionales de la salud",
+    image: "Constancias German/CURSO-~1-page-00001.jpg"
+  },
+  {
+    title: "Formación en FAP",
+    image: "Constancias German/FAP_SEIG011115H-page-00001.jpg"
+  }
+];
+
 const focusGrid = document.querySelector("#focus-grid");
 const fitGrid = document.querySelector("#fit-grid");
+const certificateGallery = document.querySelector("#certificate-gallery");
+const imageModal = document.querySelector("#image-modal");
+const imageModalImg = document.querySelector("#image-modal-img");
+const imageModalCaption = document.querySelector("#image-modal-caption");
+const imageModalClose = document.querySelector("#image-modal-close");
+const imageModalBackdrop = document.querySelector("#image-modal-backdrop");
 
 function createCard(item, iconText, className) {
   const article = document.createElement("article");
@@ -66,14 +119,74 @@ function createCard(item, iconText, className) {
   return article;
 }
 
+function openModal(item) {
+  if (!imageModal || !imageModalImg || !imageModalCaption) {
+    return;
+  }
+
+  imageModalImg.src = encodeURI(item.image);
+  imageModalImg.alt = item.title;
+  imageModalCaption.textContent = item.title;
+  imageModal.classList.add("is-open");
+  imageModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function createCertificateCard(item) {
+  const button = document.createElement("button");
+  button.className = "certificate-thumb";
+  button.type = "button";
+  button.innerHTML = `
+    <img src="${encodeURI(item.image)}" alt="${item.title}" loading="lazy" decoding="async">
+    <strong>${item.title}</strong>
+    <span>Toca para ampliar</span>
+  `;
+
+  button.addEventListener("click", () => openModal(item));
+
+  return button;
+}
+
 function renderCards(items, container, iconText, className) {
+  if (!container) {
+    return;
+  }
+
   items.forEach((item) => {
     container.appendChild(createCard(item, iconText, className));
   });
 }
 
+function renderCertificates(items, container) {
+  if (!container) {
+    return;
+  }
+
+  items.forEach((item) => {
+    container.appendChild(createCertificateCard(item));
+  });
+}
+
+function closeModal() {
+  if (!imageModal || !imageModalImg || !imageModalCaption) {
+    return;
+  }
+
+  imageModal.classList.remove("is-open");
+  imageModal.setAttribute("aria-hidden", "true");
+  imageModalImg.removeAttribute("src");
+  imageModalImg.alt = "";
+  imageModalCaption.textContent = "";
+  document.body.style.overflow = "";
+}
+
 function setupReveal() {
   const sections = document.querySelectorAll(".reveal");
+
+  if (!sections.length || typeof IntersectionObserver === "undefined") {
+    sections.forEach((section) => section.classList.add("is-visible"));
+    return;
+  }
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -92,4 +205,19 @@ function setupReveal() {
 
 renderCards(focusAreas, focusGrid, "ACT", "topic-card");
 renderCards(fitPoints, fitGrid, "FAP", "fit-card");
+renderCertificates(certificates, certificateGallery);
 setupReveal();
+
+if (imageModalClose) {
+  imageModalClose.addEventListener("click", closeModal);
+}
+
+if (imageModalBackdrop) {
+  imageModalBackdrop.addEventListener("click", closeModal);
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && imageModal?.classList.contains("is-open")) {
+    closeModal();
+  }
+});
