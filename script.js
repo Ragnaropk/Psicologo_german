@@ -52,52 +52,58 @@ const fitPoints = [
   }
 ];
 
-const certificates = [
+const certificateFiles = [
   {
     title: "Herramientas para el control de la ansiedad",
-    image: "Constancias German/Constancia-Curso-Virtual-de-Herramientas-para-el-Control-de-la-Ansiedad_Curso-Virtual-de-Her-page-00001.jpg"
+    file: "Constancia-Curso-Virtual-de-Herramientas-para-el-Control-de-la-Ansiedad_Curso-Virtual-de-Her-page-00001.jpg"
   },
   {
     title: "Primeros auxilios psicológicos",
-    image: "Constancias German/Constancia-Curso-Virtual-de-Primeros-Auxilios-Psicologicos_Curso-Virtual-de-Primeros-Auxilio-page-00001.jpg"
+    file: "Constancia-Curso-Virtual-de-Primeros-Auxilios-Psicologicos_Curso-Virtual-de-Primeros-Auxilio-page-00001.jpg"
   },
   {
     title: "Terapia cognitivo conductual",
-    image: "Constancias German/Constancia-Curso-Virtual-de-Terapia-Cognitivo-Conductual_Curso-Virtual-de-Terapia-Cognitivo--page-00001.jpg"
+    file: "Constancia-Curso-Virtual-de-Terapia-Cognitivo-Conductual_Curso-Virtual-de-Terapia-Cognitivo--page-00001.jpg"
   },
   {
     title: "Posvención del suicidio",
-    image: "Constancias German/Constancia-Curso-Virtual-Posvencion-del-Suicidio_Curso-Virtual-Posvencion-del-Suicidio_Germa-page-00001.jpg"
+    file: "Constancia-Curso-Virtual-Posvencion-del-Suicidio_Curso-Virtual-Posvencion-del-Suicidio_Germa-page-00001.jpg"
   },
   {
     title: "Prevención de autolesiones",
-    image: "Constancias German/Constancia-Curso-Virtual-Prevencion-de-Autolesiones_Curso-Virtual-Prevencion-de-Autolesiones-page-00001.jpg"
+    file: "Constancia-Curso-Virtual-Prevencion-de-Autolesiones_Curso-Virtual-Prevencion-de-Autolesiones-page-00001.jpg"
   },
   {
     title: "Prevención del suicidio",
-    image: "Constancias German/Constancia-Curso-Virtual-Prevencion-del-Suicidio_Curso-Virtual-Prevencion-del-Suicidio_Germa-page-00001.jpg"
+    file: "Constancia-Curso-Virtual-Prevencion-del-Suicidio_Curso-Virtual-Prevencion-del-Suicidio_Germa-page-00001.jpg"
   },
   {
     title: "Psicología de las adicciones",
-    image: "Constancias German/Constancia-Curso-Virtual-Psicologia-de-las-Adicciones_Curso-Virtual-Psicologia-de-las-Adicci-page-00001.jpg"
+    file: "Constancia-Curso-Virtual-Psicologia-de-las-Adicciones_Curso-Virtual-Psicologia-de-las-Adicci-page-00001.jpg"
   },
   {
     title: "Trastornos de la conducta alimentaria",
-    image: "Constancias German/Constancia-Curso-Virtual-Trastornos-de-la-Conducta-Alimentaria_Curso-Virtual-Trastornos-de-l-page-00001.jpg"
+    file: "Constancia-Curso-Virtual-Trastornos-de-la-Conducta-Alimentaria_Curso-Virtual-Trastornos-de-l-page-00001.jpg"
   },
   {
     title: "Violencia de género",
-    image: "Constancias German/Constancia-Curso-Virtual-Violencia-de-Genero-Que-Es-y-Como-Prevenirla_Curso-Virtual-Violenci-page-00001.jpg"
+    file: "Constancia-Curso-Virtual-Violencia-de-Genero-Que-Es-y-Como-Prevenirla_Curso-Virtual-Violenci-page-00001.jpg"
   },
   {
     title: "Autocuidado para profesionales de la salud",
-    image: "Constancias German/CURSO-~1-page-00001.jpg"
+    file: "CURSO-~1-page-00001.jpg"
   },
   {
     title: "Formación en FAP",
-    image: "Constancias German/FAP_SEIG011115H-page-00001.jpg"
+    file: "FAP_SEIG011115H-page-00001.jpg"
   }
 ];
+
+const certificates = certificateFiles.map((item) => ({
+  title: item.title,
+  thumb: `Constancias German/thumbs/${item.file}`,
+  display: `Constancias German/display/${item.file}`
+}));
 
 const focusGrid = document.querySelector("#focus-grid");
 const fitGrid = document.querySelector("#fit-grid");
@@ -124,7 +130,7 @@ function openModal(item) {
     return;
   }
 
-  imageModalImg.src = encodeURI(item.image);
+  imageModalImg.src = encodeURI(item.display);
   imageModalImg.alt = item.title;
   imageModalCaption.textContent = item.title;
   imageModal.classList.add("is-open");
@@ -136,10 +142,15 @@ function createCertificateCard(item) {
   const button = document.createElement("button");
   button.className = "certificate-thumb";
   button.type = "button";
+  button.setAttribute("aria-label", `Ver constancia: ${item.title}`);
   button.innerHTML = `
-    <img src="${encodeURI(item.image)}" alt="${item.title}" loading="lazy" decoding="async">
-    <strong>${item.title}</strong>
-    <span>Toca para ampliar</span>
+    <div class="certificate-thumb-media">
+      <img src="${encodeURI(item.thumb)}" alt="${item.title}" loading="lazy" decoding="async">
+    </div>
+    <div class="certificate-thumb-copy">
+      <strong>${item.title}</strong>
+      <span>Toque para ampliar</span>
+    </div>
   `;
 
   button.addEventListener("click", () => openModal(item));

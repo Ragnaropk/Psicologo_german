@@ -355,13 +355,14 @@ a {
 }
 
 .certificate-gallery {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: start;
 }
 
 .certificate-thumb {
   display: grid;
-  gap: 14px;
-  padding: 18px;
+  gap: 12px;
+  padding: 14px;
   font: inherit;
   text-align: left;
   background: rgba(255, 255, 255, 0.82);
@@ -378,13 +379,28 @@ a {
   box-shadow: 0 18px 34px rgba(77, 89, 85, 0.12);
 }
 
+.certificate-thumb-media {
+  overflow: hidden;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(243, 239, 235, 0.95));
+  border: 1px solid rgba(97, 123, 114, 0.14);
+}
+
 .certificate-thumb img {
   width: 100%;
   aspect-ratio: 4 / 5.35;
   object-fit: cover;
-  border-radius: 16px;
-  border: 1px solid rgba(97, 123, 114, 0.14);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(243, 239, 235, 0.95));
+  transition: transform 220ms ease;
+}
+
+.certificate-thumb:hover img,
+.certificate-thumb:focus-visible img {
+  transform: scale(1.02);
+}
+
+.certificate-thumb-copy {
+  display: grid;
+  gap: 6px;
 }
 
 .certificate-thumb strong {
@@ -475,13 +491,16 @@ a {
   background: rgba(255, 255, 255, 0.96);
   border-radius: 24px;
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
 }
 
 .image-modal-figure img {
   width: 100%;
-  max-height: 78vh;
-  object-fit: contain;
+  height: auto;
   border-radius: 16px;
+  object-fit: contain;
+  touch-action: pinch-zoom;
 }
 
 .image-modal-figure figcaption {
@@ -552,8 +571,7 @@ a {
   .approach-grid,
   .topic-grid,
   .fit-grid,
-  .detail-grid,
-  .certificate-gallery {
+  .detail-grid {
     grid-template-columns: 1fr;
   }
 
@@ -595,6 +613,26 @@ a {
     font-size: clamp(2.1rem, 12vw, 3.2rem);
   }
 
+  .certificate-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .certificate-thumb {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .certificate-thumb strong {
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .certificate-thumb span {
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+
   .site-footer {
     flex-direction: column;
     align-items: flex-start;
@@ -611,11 +649,36 @@ a {
   }
 
   .image-modal {
-    padding: 14px;
+    padding: 10px;
   }
 
   .image-modal-close {
-    top: 12px;
-    right: 12px;
+    position: sticky;
+    top: 0;
+    margin-left: auto;
+    right: auto;
+  }
+
+  .image-modal-figure {
+    width: 100%;
+    max-height: calc(100dvh - 20px);
+    padding: 10px;
+    border-radius: 20px;
+  }
+
+  .image-modal-figure figcaption {
+    padding: 12px 4px 2px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 520px) {
+  .certificate-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .certificate-thumb img {
+    aspect-ratio: 4 / 5.1;
   }
 }
